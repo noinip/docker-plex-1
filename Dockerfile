@@ -1,10 +1,6 @@
 FROM lsiobase/xenial
 MAINTAINER Stian Larsen, sparklyballs
 
-# set version label
-ARG BUILD_DATE
-ARG VERSION
-LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 
 # global environment settings
 ENV DEBIAN_FRONTEND="noninteractive" \
@@ -23,7 +19,20 @@ RUN \
 	avahi-daemon \
 	dbus \
 	unrar \
+	python3 \
+	git \
+	build-essential \
+	libargtable2-dev \
+	autoconf \
+	libtool-bin \
+	ffmpeg \
+	libsdl1.2-dev \
+	libavutil-dev \
+	libavformat-dev \
+	libavcodec-dev \
 	wget && \
+
+#yeah I changed some shit up there^^ in install packages. Here's a package for your mom
 
 # install plex
  curl -o \
@@ -34,13 +43,45 @@ RUN \
 # change abc home folder to fix plex hanging at runtime with usermod
  usermod -d /app abc && \
 
+#noinp added
+# Clone Comskip
+    cd /opt && \
+    git clone git://github.com/erikkaashoek/Comskip && \
+    cd Comskip && \
+    ./autogen.sh && \
+    ./configure && \
+    make && \
+
+# Clone PlexComskip
+    cd /opt && \
+    git clone https://github.com/ekim1337/PlexComskip.git && \
+    chmod -R 777 /opt/ /tmp/ /root/ && \
+    touch /var/log/PlexComskip.log && \
+    chmod 777 /var/log/PlexComskip.log && \
+
+#noinip added cleanup
+    apt-get -y autoremove && \
+    apt-get -y clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm -rf /tmp/* && \
+    rm -rf /var/tmp/*
+#end
+
+COPY ./PlexComskip.conf /opt/PlexComskip/PlexComskip.conf
+
+#end
+
+
+
 # cleanup
- apt-get clean && \
+RUN apt-get clean && \
  rm -rf \
 	/etc/default/plexmediaserver \
 	/tmp/* \
 	/var/lib/apt/lists/* \
 	/var/tmp/*
+
+
 
 # add local files
 COPY root/ /
