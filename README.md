@@ -1,3 +1,17 @@
+!!!!!THIS IS NOT A LINUXSERVER.IO DOCKER!!!
+
+This is a fork and it brings in elements from the k-plex docker to get comskip working in Plex
+
+Don't ask the LSIO guys for support if you're using this. 
+
+Everything below this line is just for reference. It has been left intact as it was when I forked their repo
+
+
+
+
+---------------------------------------------
+
+
 [linuxserverurl]: https://linuxserver.io
 [forumurl]: https://forum.linuxserver.io
 [ircurl]: https://www.linuxserver.io/irc/
