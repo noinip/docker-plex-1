@@ -32,7 +32,6 @@ RUN \
 	libavcodec-dev \
 	wget && \
 
-#yeah I changed some shit up there^^ in install packages. Here's a package for your mom
 
 # install plex
  curl -o \
@@ -43,7 +42,6 @@ RUN \
 # change abc home folder to fix plex hanging at runtime with usermod
  usermod -d /app abc && \
 
-#noinp added
 # Clone Comskip
     cd /opt && \
     git clone git://github.com/erikkaashoek/Comskip && \
@@ -59,23 +57,14 @@ RUN \
     touch /var/log/PlexComskip.log && \
     chmod 777 /var/log/PlexComskip.log && \
 
-#noinip added cleanup
-    apt-get -y autoremove && \
-    apt-get -y clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm -rf /tmp/* && \
-    rm -rf /var/tmp/*
-#end
 
 COPY ./PlexComskip.conf /opt/PlexComskip/PlexComskip.conf
-
-#end
-
 
 
 # cleanup
 RUN apt-get clean && \
  rm -rf \
+	/var/lib/apt/lists/* \
 	/etc/default/plexmediaserver \
 	/tmp/* \
 	/var/lib/apt/lists/* \
