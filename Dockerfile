@@ -58,11 +58,8 @@ RUN \
     chmod 777 /var/log/PlexComskip.log && \
 
 
-COPY ./PlexComskip.conf /opt/PlexComskip/PlexComskip.conf
-
-
 # cleanup
-RUN apt-get clean && \
+apt-get clean && \
  rm -rf \
 	/var/lib/apt/lists/* \
 	/etc/default/plexmediaserver \
@@ -70,6 +67,7 @@ RUN apt-get clean && \
 	/var/lib/apt/lists/* \
 	/var/tmp/*
 
+ADD ./PlexComskip.conf /opt/PlexComskip/PlexComskip.conf
 
 
 # add local files
